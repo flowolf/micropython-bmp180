@@ -42,7 +42,8 @@ class BMP180():
     _bmp_addr = 119             # adress of BMP180 is hardcoded on the sensor
 
     # init
-    def __init__(self, scl=Pin(5), sda=Pin(4), freq=100000):
+    def __init__(self, scl=Pin(5), sda=Pin(4), freq=100000,
+                 baseline=101325.0, oversample=3):
 
         # create i2c obect
         _bmp_addr = self._bmp_addr
@@ -62,8 +63,8 @@ class BMP180():
         self._MD = unp('>h', self._bmp_i2c.readfrom_mem(_bmp_addr, 0xBE, 2))[0]
 
         # settings to be adjusted by user
-        self.oversample_setting = 3
-        self.baseline = 101325.0
+        self.oversample_setting = oversample
+        self.baseline = baseline
 
         # output raw
         self.UT_raw = None
